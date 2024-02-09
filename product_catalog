@@ -1,0 +1,27 @@
+# Feature: Product Catalog
+# Pseudo code for product catalog functionality
+
+class Product:
+    def __init__(self, name, price, description):
+        self.name = name
+        self.price = price
+        self.description = description
+
+class Catalog:
+    def __init__(self):
+        self.products = []
+
+    def add_product(self, name, price, description):
+        # Add new product to catalog
+        self.products.append(Product(name, price, description))
+        print("Product added to catalog.")
+
+    def search_product(self, keyword):
+        # Search for product in catalog
+        for product in self.products:
+            if keyword.lower() in product.name.lower() or keyword.lower() in product.description.lower():
+                print(f"Product found: {product.name} - {product.price}$")
+                return product
+        print("Product not found.")
+        return None
+
