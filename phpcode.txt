@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <style type="text/css">
+        body {
+            background-color: #ffffff;
+        }
+        div {
+            border-bottom: 2px solid #aaa;
+            padding-bottom: 10px;
+            margin-bottom: 5px;
+        }
+        div h2 {
+            font-size: 1.2em;
+        }
+        table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+        tr:nth-child(even){background-color: #f2f2f2}
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Server Inventory</h1>
+<p> <input type="button" value="Home" onClick="window.location.href='../index.html'"></p>
+    <?php
+    // Connect to the database
+    include('connectdb.php');
+
+    // Get the records from the database
+    if ($result = $mysqli->query("SELECT * FROM newstorage ORDER BY sn ASC")) {
+        // Display records if there are records to display
+        if ($result->num_rows > 0) {
+            // Display records in a table
+            echo "<table border='1' cellpadding='10'>";
+            // Set table headers
+            echo "<tr><th>S.No</th><th>Vendor</th><th>Cluster</th><th>Node Name</th><th>IP Address</th><th>SP IP</th><th>System ID</th><th>Serial No</th><th>Location</th><th>Version</th><th>Hardware</th><th>RAW TB</th><th>Usable</th><th>Disks</th><th>Shelf Count</th><th>Shelf Model</th><th>Remarks</th><th>Renewal</th><th>Actions</th></tr>";
+
+            while ($row = $result->fetch_object()) {
+                // Set up a row for each record
+                echo "<tr>";
+                echo "<td>" . $row->sn . "</td>";
+                echo "<td>" . $row->vendor . "</td>";
+                echo "<td>" . $row->clun . "</td>";
+                echo "<td>" . $row->noden . "</td>";
+                echo "<td>" . $row->ip . "</td>";
+                echo "<td>" . $row->spip . "</td>";
+                echo "<td>" . $row->sysid . "</td>";
+                echo "<td>" . $row->ssn . "</td>";
+                echo "<td>" . $row->loc . "</td>";
+                echo "<td>" . $row->os . "</td>";
+                echo "<td>" . $row->hwm . "</td>";
+                echo "<td>" . $row->raw . "</td>";
+                echo "<td>" . $row->usable . "</td>";
+                echo "<td>" . $row->disks . "</td>";
+                echo "<td>" . $row->shelf . "</td>";
+                echo "<td>" . $row->shelfm . "</td>";
+                echo "<td>" . $row->remarks . "</td>";
+                echo "<td>" . $row->renewal . "</td>";
+                echo "<td><a href='edit_record.php?sn=" . $row->sn . "'>Edit</a></td>";
+                echo "</tr>";
+            }
+
+            echo "</table>";
+        } else {
+            echo "No results to display!";
+        }
+    } else {
+        echo "Error: " . $mysqli->error;
+    }
+
+    // Close database connection
+    $mysqli->close();
+    ?>
+</body>
+</html>
